@@ -4,9 +4,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 import joblib
 from datetime import datetime
+import os
 
-def load_and_preprocess_data(file_path='marketing_campaign.csv'):
-    # Đọc dữ liệu
+def load_and_preprocess_data(file_path=None):
+    # Đọc dữ liệu với đường dẫn tuyệt đối
+    if file_path is None:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(script_dir, '..', 'marketing_campaign.csv')
+    
     df = pd.read_csv(file_path, sep='\t')
     
     # Xử lý missing values
@@ -52,8 +57,10 @@ def load_and_preprocess_data(file_path='marketing_campaign.csv'):
     
     X = df[features]
     
-    # Load scaler đã được tối ưu
-    scaler = joblib.load('optimized_scaler.pkl')
+    # Load scaler đã được tối ưu với đường dẫn tuyệt đối
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    scaler_path = os.path.join(script_dir, '..', 'optimized_scaler.pkl')
+    scaler = joblib.load(scaler_path)
     
     # Chuẩn hóa dữ liệu
     X_scaled = scaler.transform(X)
@@ -134,8 +141,10 @@ def analyze_top_customers(potential_customers, n=10):
     return top_n
 
 def predict_potential_customers():
-    # Load model đã được tối ưu
-    best_model = joblib.load('optimized_model.pkl')
+    # Load model đã được tối ưu với đường dẫn tuyệt đối
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(script_dir, '..', 'optimized_model.pkl')
+    best_model = joblib.load(model_path)
     
     # Load và tiền xử lý dữ liệu
     df, X_scaled = load_and_preprocess_data()
@@ -166,8 +175,9 @@ def predict_potential_customers():
         'PredictionProbability'
     ]
     
-    # Lưu kết quả
-    potential_customers[columns_to_save].to_csv('result.csv', index=False)
+    # Lưu kết quả với đường dẫn tuyệt đối
+    result_path = os.path.join(script_dir, '..', 'result.csv')
+    potential_customers[columns_to_save].to_csv(result_path, index=False)
     
     # Phân tích thống kê cơ bản
     print("\n=== THỐNG KÊ KHÁCH HÀNG TIỀM NĂNG ===")
