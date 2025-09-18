@@ -8,10 +8,13 @@ from sklearn.svm import SVC
 from sklearn.metrics import classification_report, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.impute import SimpleImputer
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
-# Đọc dữ liệu
-df = pd.read_csv('marketing_campaign.csv', sep='\t')
+# Đọc dữ liệu với đường dẫn tuyệt đối
+script_dir = os.path.dirname(os.path.abspath(__file__))
+csv_path = os.path.join(script_dir, '..', 'marketing_campaign.csv')
+df = pd.read_csv(csv_path, sep='\t')
 
 # Xử lý missing values
 numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
@@ -98,7 +101,10 @@ results_df.to_csv('model_results.csv', index=False)
 best_model = models[results_df.loc[results_df['F1-score'].idxmax(), 'Model']]
 print(f"\nMô hình tốt nhất: {best_model.__class__.__name__}")
 
-# Lưu scaler và mô hình tốt nhất
+# Lưu scaler và mô hình tốt nhất với đường dẫn tuyệt đối
 import joblib
-joblib.dump(scaler, 'scaler.pkl')
-joblib.dump(best_model, 'best_model.pkl') 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+scaler_path = os.path.join(script_dir, '..', 'scaler.pkl')
+model_path = os.path.join(script_dir, '..', 'best_model.pkl')
+joblib.dump(scaler, scaler_path)
+joblib.dump(best_model, model_path) 

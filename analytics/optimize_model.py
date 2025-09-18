@@ -7,10 +7,13 @@ from sklearn.metrics import classification_report, accuracy_score, precision_sco
 from sklearn.impute import SimpleImputer
 import joblib
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
-# Đọc dữ liệu
-df = pd.read_csv('marketing_campaign.csv', sep='\t')
+# Đọc dữ liệu với đường dẫn tuyệt đối
+script_dir = os.path.dirname(os.path.abspath(__file__))
+csv_path = os.path.join(script_dir, '..', 'marketing_campaign.csv')
+df = pd.read_csv(csv_path, sep='\t')
 
 # Xử lý missing values
 numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
@@ -78,8 +81,11 @@ print("F1-score:", f1_score(y_test, y_pred))
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
 
-# Lưu mô hình tối ưu và scaler
-joblib.dump(scaler, 'optimized_scaler.pkl')
-joblib.dump(best_model, 'optimized_model.pkl')
+# Lưu mô hình tối ưu và scaler với đường dẫn tuyệt đối
+script_dir = os.path.dirname(os.path.abspath(__file__))
+scaler_path = os.path.join(script_dir, '..', 'optimized_scaler.pkl')
+model_path = os.path.join(script_dir, '..', 'optimized_model.pkl')
+joblib.dump(scaler, scaler_path)
+joblib.dump(best_model, model_path)
 
 print("\nMô hình tối ưu đã được lưu vào file 'optimized_model.pkl'") 
