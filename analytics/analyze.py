@@ -1,124 +1,93 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
-from sklearn.impute import SimpleImputer
+import json
 import warnings
 warnings.filterwarnings('ignore')
 
-# Đọc dữ liệu
-df = pd.read_csv('marketing_campaign.csv', sep='\t')
+def analyze_data():
+    # Đọc kết quả từ file CSV
+    results_df = pd.read_csv('../model_results.csv')
+    
+    # Đọc dữ liệu gốc
+    df = pd.read_csv('../marketing_campaign.csv', sep='\t')
+    df['Age'] = 2024 - df['Year_Birth']
+    
+    # 1. Phân tích phân khúc khách hàng theo độ tuổi
+    age_segments = pd.cut(df['Age'], 
+                         bins=[0, 30, 40, 50, 60, 100],
+                         labels=['<30', '30-40', '40-50', '50-60', '>60'])
+    age_distribution = age_segments.value_counts().sort_index()
+    
+    # 2. Phân tích theo trình độ học vấn
+    education_stats = df.groupby('Education')['Response'].agg(['count', 'mean']).reset_index()
+    education_stats['potential_rate'] = education_stats['mean'] * 100
+    education_stats = education_stats.sort_values('potential_rate', ascending=False)
+    
+    # 3. Phân tích theo tình trạng hôn nhân
+    marital_stats = df.groupby('Marital_Status')['Response'].agg(['count', 'mean']).reset_index()
+    marital_stats['potential_rate'] = marital_stats['mean'] * 100
+    marital_stats = marital_stats.sort_values('potential_rate', ascending=False)
+    
+    # 4. Phân tích theo thu nhập
+    income_segments = pd.qcut(df['Income'], q=5, labels=['Rất thấp', 'Thấp', 'Trung bình', 'Cao', 'Rất cao'])
+    income_stats = df.groupby(income_segments)['Response'].agg(['count', 'mean']).reset_index()
+    income_stats['potential_rate'] = income_stats['mean'] * 100
+    
+    # 5. Phân tích chi tiêu theo nhóm sản phẩm
+    spending_cols = ['MntWines', 'MntFruits', 'MntMeatProducts', 'MntFishProducts', 
+                    'MntSweetProducts', 'MntGoldProds']
+    spending_stats = df[spending_cols].agg(['mean', 'median', 'max']).round(2)
+    
+    # 6. Phân tích kênh mua hàng
+    channel_cols = ['NumWebPurchases', 'NumCatalogPurchases', 'NumStorePurchases']
+    channel_stats = df[channel_cols].agg(['mean', 'median', 'max']).round(2)
+    
+    # 7. Phân tích tương tác
+    interaction_stats = df.groupby('Response').agg({
+        'NumWebVisitsMonth': ['mean', 'median', 'max'],
+        'NumDealsPurchases': ['mean', 'median', 'max']
+    }).round(2)
+    
+    # Lấy kết quả của mô hình tốt nhất
+    best_model_results = results_df.loc[results_df['F1-score'].idxmax()]
+    
+    # Tạo kết quả JSON
+    result = {
+        'potentialCustomers': int(sum(df['Response'] == 1)),
+        'nonPotentialCustomers': int(sum(df['Response'] == 0)),
+        'modelPerformance': {
+            'model': best_model_results['Model'],
+            'accuracy': float(best_model_results['Accuracy']),
+            'precision': float(best_model_results['Precision']),
+            'recall': float(best_model_results['Recall']),
+            'f1Score': float(best_model_results['F1-score']),
+            'cvMean': float(best_model_results['CV Mean']),
+            'cvStd': float(best_model_results['CV Std'])
+        },
+        'demographics': {
+            'ageSegments': [
+                {'name': age, 'count': int(count)} 
+                for age, count in age_distribution.items()
+            ],
+            'education': education_stats.to_dict('records'),
+            'maritalStatus': marital_stats.to_dict('records'),
+            'income': income_stats.to_dict('records')
+        },
+        'spending': {
+            'byProduct': spending_stats.to_dict(),
+            'byChannel': channel_stats.to_dict()
+        },
+        'interactions': {
+            'webVisits': interaction_stats['NumWebVisitsMonth'].to_dict(),
+            'dealPurchases': interaction_stats['NumDealsPurchases'].to_dict()
+        }
+    }
+    
+    return result
 
-# Hiển thị thông tin cơ bản về dữ liệu
-print("=== Thông tin cơ bản về dữ liệu ===")
-print(f"Số dòng: {df.shape[0]}")
-print(f"Số cột: {df.shape[1]}")
-print("\nThông tin các cột:")
-print(df.info())
-print("\nThống kê mô tả:")
-print(df.describe())
-
-# Kiểm tra missing values
-print("\n=== Kiểm tra missing values ===")
-missing_values = df.isnull().sum()
-print(missing_values[missing_values > 0])
-
-# Xử lý missing values
-# Thay thế missing values bằng giá trị trung bình cho các cột số
-numeric_cols = df.select_dtypes(include=['int64', 'float64']).columns
-imputer = SimpleImputer(strategy='mean')
-df[numeric_cols] = imputer.fit_transform(df[numeric_cols])
-
-# Phân tích biến mục tiêu
-print("\n=== Phân tích biến mục tiêu (Response) ===")
-print(df['Response'].value_counts(normalize=True))
-
-# Visualize phân phối của một số biến quan trọng
-plt.figure(figsize=(15, 10))
-
-# Phân phối thu nhập
-plt.subplot(2, 2, 1)
-sns.histplot(data=df, x='Income', bins=30)
-plt.title('Phân phối thu nhập')
-
-# Phân phối tuổi
-plt.subplot(2, 2, 2)
-df['Age'] = 2024 - df['Year_Birth']  # Tính tuổi
-sns.histplot(data=df, x='Age', bins=30)
-plt.title('Phân phối tuổi')
-
-# Tương quan giữa Response và Education
-plt.subplot(2, 2, 3)
-sns.countplot(data=df, x='Education', hue='Response')
-plt.title('Tương quan giữa Education và Response')
-plt.xticks(rotation=45)
-
-# Tương quan giữa Response và Marital_Status
-plt.subplot(2, 2, 4)
-sns.countplot(data=df, x='Marital_Status', hue='Response')
-plt.title('Tương quan giữa Marital_Status và Response')
-plt.xticks(rotation=45)
-
-plt.tight_layout()
-plt.savefig('eda_plots.png')
-plt.close()
-
-# Phân tích tương quan giữa các biến số
-correlation_matrix = df[numeric_cols].corr()
-
-plt.figure(figsize=(12, 10))
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
-plt.title('Ma trận tương quan')
-plt.tight_layout()
-plt.savefig('correlation_matrix.png')
-plt.close()
-
-# Tiền xử lý dữ liệu cho mô hình
-# Chọn các biến đặc trưng
-features = ['Year_Birth', 'Income', 'Kidhome', 'Teenhome', 'Recency',
-            'MntWines', 'MntFruits', 'MntMeatProducts', 'MntFishProducts',
-            'MntSweetProducts', 'MntGoldProds', 'NumDealsPurchases',
-            'NumWebPurchases', 'NumCatalogPurchases', 'NumStorePurchases',
-            'NumWebVisitsMonth']
-
-X = df[features]
-y = df['Response']
-
-# Chia dữ liệu thành tập train và test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Chuẩn hóa dữ liệu
-scaler = StandardScaler()
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-
-# Xây dựng mô hình Random Forest
-rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-rf_model.fit(X_train_scaled, y_train)
-
-# Đánh giá mô hình
-y_pred = rf_model.predict(X_test_scaled)
-print("\n=== Đánh giá mô hình ===")
-print("Accuracy:", accuracy_score(y_test, y_pred))
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
-
-# Hiển thị feature importance
-feature_importance = pd.DataFrame({
-    'Feature': features,
-    'Importance': rf_model.feature_importances_
-}).sort_values('Importance', ascending=False)
-
-plt.figure(figsize=(10, 6))
-sns.barplot(data=feature_importance, x='Importance', y='Feature')
-plt.title('Feature Importance')
-plt.tight_layout()
-plt.savefig('feature_importance.png')
-plt.close()
-
-print("\n=== Feature Importance ===")
-print(feature_importance) 
+if __name__ == '__main__':
+    try:
+        result = analyze_data()
+        print(json.dumps(result))
+    except Exception as e:
+        print(json.dumps({'error': str(e)})) 

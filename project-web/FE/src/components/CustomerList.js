@@ -16,11 +16,12 @@ import {
 } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { getCustomers } from '../services/customerService';
+// import { getCustomers } from '../services/customerService';
+import { mockCustomers } from '../data/mockData';
 
 const formatCurrency = (value) => {
-  if (value === undefined || value === null) return '$0';
-  return `$${value.toLocaleString('en-US')}`;
+  if (value === undefined || value === null) return '0 VNĐ';
+  return `${value.toLocaleString('vi-VN')} VNĐ`;
 };
 
 const columns = [
@@ -38,20 +39,20 @@ const Row = ({ customer }) => {
   const [open, setOpen] = useState(false);
 
   const spendingCategories = [
-    { label: 'Rượu', value: customer.MntWines },
-    { label: 'Trái cây', value: customer.MntFruits },
-    { label: 'Thịt', value: customer.MntMeatProducts },
-    { label: 'Cá', value: customer.MntFishProducts },
-    { label: 'Đồ ngọt', value: customer.MntSweetProducts },
-    { label: 'Vàng', value: customer.MntGoldProds },
+    { label: 'Công nghệ giáo dục', value: customer.MntWines },
+    { label: 'Phương pháp giảng dạy', value: customer.MntFruits },
+    { label: 'Công nghệ thông tin', value: customer.MntMeatProducts },
+    { label: 'Thiết kế web', value: customer.MntFishProducts },
+    { label: 'Lập trình', value: customer.MntSweetProducts },
+    { label: 'Nghiên cứu khoa học', value: customer.MntGoldProds },
   ];
 
   const purchaseInfo = [
-    { label: 'Mua qua web', value: customer.NumWebPurchases },
-    { label: 'Mua qua catalog', value: customer.NumCatalogPurchases },
-    { label: 'Mua tại cửa hàng', value: customer.NumStorePurchases },
-    { label: 'Mua khuyến mãi', value: customer.NumDealsPurchases },
-    { label: 'Truy cập web/tháng', value: customer.NumWebVisitsMonth },
+    { label: 'Mua sách online', value: customer.NumWebPurchases },
+    { label: 'Mua sách qua catalog', value: customer.NumCatalogPurchases },
+    { label: 'Mua sách tại cửa hàng', value: customer.NumStorePurchases },
+    { label: 'Mua sách giảm giá', value: customer.NumDealsPurchases },
+    { label: 'Truy cập website/tháng', value: customer.NumWebVisitsMonth },
   ];
 
   return (
@@ -139,8 +140,8 @@ const CustomerList = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const data = await getCustomers();
-        setCustomers(data);
+        // Sử dụng dữ liệu mẫu thay vì gọi API
+        setCustomers(mockCustomers);
         setLoading(false);
       } catch (err) {
         setError('Không thể tải dữ liệu khách hàng');
@@ -167,7 +168,7 @@ const CustomerList = () => {
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <Box p={3}>
         <Typography variant="h5" gutterBottom>
-          Danh sách khách hàng tiềm năng ({customers.length} khách hàng)
+          Danh sách sinh viên tiềm năng mua sách công nghệ giáo dục ({customers.length} sinh viên)
         </Typography>
       </Box>
       <TableContainer sx={{ maxHeight: 600 }}>

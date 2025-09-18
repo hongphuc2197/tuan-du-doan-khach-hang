@@ -4,16 +4,20 @@ import axios from 'axios';
 const PredictionForm = () => {
   const [formData, setFormData] = useState({
     Income: '',
+    Kidhome: '',
+    Teenhome: '',
     Recency: '',
+    MntWines: '',
+    MntFruits: '',
+    MntMeatProducts: '',
+    MntFishProducts: '',
+    MntSweetProducts: '',
+    MntGoldProds: '',
+    NumDealsPurchases: '',
     NumWebPurchases: '',
     NumCatalogPurchases: '',
     NumStorePurchases: '',
     NumWebVisitsMonth: '',
-    AcceptedCmp3: '0',
-    AcceptedCmp4: '0',
-    AcceptedCmp5: '0',
-    AcceptedCmp1: '0',
-    AcceptedCmp2: '0',
   });
 
   const [prediction, setPrediction] = useState(null);
@@ -45,116 +49,192 @@ const PredictionForm = () => {
 
   return (
     <div className="prediction-form">
-      <h2>Customer Prediction Form</h2>
+      <h2>Dự đoán khách hàng tiềm năng mua sách công nghệ giáo dục</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Income:</label>
+          <label>Thu nhập (VND):</label>
           <input
             type="number"
             name="Income"
             value={formData.Income}
             onChange={handleChange}
+            placeholder="Nhập thu nhập hàng tháng"
             required
           />
         </div>
 
         <div className="form-group">
-          <label>Recency (days since last purchase):</label>
+          <label>Số con nhỏ:</label>
+          <input
+            type="number"
+            name="Kidhome"
+            value={formData.Kidhome}
+            onChange={handleChange}
+            min="0"
+            max="5"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Số con tuổi teen:</label>
+          <input
+            type="number"
+            name="Teenhome"
+            value={formData.Teenhome}
+            onChange={handleChange}
+            min="0"
+            max="5"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Số ngày từ lần mua cuối:</label>
           <input
             type="number"
             name="Recency"
             value={formData.Recency}
             onChange={handleChange}
+            placeholder="Số ngày kể từ lần mua sách cuối"
             required
           />
         </div>
 
         <div className="form-group">
-          <label>Number of Web Purchases:</label>
+          <label>Chi tiêu cho sách Công nghệ giáo dục (VND):</label>
+          <input
+            type="number"
+            name="MntWines"
+            value={formData.MntWines}
+            onChange={handleChange}
+            placeholder="Ví dụ: 150000"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Chi tiêu cho sách Phương pháp giảng dạy (VND):</label>
+          <input
+            type="number"
+            name="MntFruits"
+            value={formData.MntFruits}
+            onChange={handleChange}
+            placeholder="Ví dụ: 180000"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Chi tiêu cho sách Công nghệ thông tin (VND):</label>
+          <input
+            type="number"
+            name="MntMeatProducts"
+            value={formData.MntMeatProducts}
+            onChange={handleChange}
+            placeholder="Ví dụ: 120000"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Chi tiêu cho sách Thiết kế web (VND):</label>
+          <input
+            type="number"
+            name="MntFishProducts"
+            value={formData.MntFishProducts}
+            onChange={handleChange}
+            placeholder="Ví dụ: 95000"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Chi tiêu cho sách Lập trình (VND):</label>
+          <input
+            type="number"
+            name="MntSweetProducts"
+            value={formData.MntSweetProducts}
+            onChange={handleChange}
+            placeholder="Ví dụ: 130000"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Chi tiêu cho sách Nghiên cứu khoa học (VND):</label>
+          <input
+            type="number"
+            name="MntGoldProds"
+            value={formData.MntGoldProds}
+            onChange={handleChange}
+            placeholder="Ví dụ: 140000"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Số lần mua hàng giảm giá:</label>
+          <input
+            type="number"
+            name="NumDealsPurchases"
+            value={formData.NumDealsPurchases}
+            onChange={handleChange}
+            min="0"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Số lần mua sách online:</label>
           <input
             type="number"
             name="NumWebPurchases"
             value={formData.NumWebPurchases}
             onChange={handleChange}
+            min="0"
             required
           />
         </div>
 
         <div className="form-group">
-          <label>Number of Catalog Purchases:</label>
+          <label>Số lần mua sách qua catalog:</label>
           <input
             type="number"
             name="NumCatalogPurchases"
             value={formData.NumCatalogPurchases}
             onChange={handleChange}
+            min="0"
             required
           />
         </div>
 
         <div className="form-group">
-          <label>Number of Store Purchases:</label>
+          <label>Số lần mua sách tại cửa hàng:</label>
           <input
             type="number"
             name="NumStorePurchases"
             value={formData.NumStorePurchases}
             onChange={handleChange}
+            min="0"
             required
           />
         </div>
 
         <div className="form-group">
-          <label>Number of Web Visits per Month:</label>
+          <label>Số lần truy cập website trong tháng:</label>
           <input
             type="number"
             name="NumWebVisitsMonth"
             value={formData.NumWebVisitsMonth}
             onChange={handleChange}
+            min="0"
             required
           />
         </div>
 
-        <div className="form-group">
-          <label>Accepted Campaign 3:</label>
-          <select name="AcceptedCmp3" value={formData.AcceptedCmp3} onChange={handleChange}>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Accepted Campaign 4:</label>
-          <select name="AcceptedCmp4" value={formData.AcceptedCmp4} onChange={handleChange}>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Accepted Campaign 5:</label>
-          <select name="AcceptedCmp5" value={formData.AcceptedCmp5} onChange={handleChange}>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Accepted Campaign 1:</label>
-          <select name="AcceptedCmp1" value={formData.AcceptedCmp1} onChange={handleChange}>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label>Accepted Campaign 2:</label>
-          <select name="AcceptedCmp2" value={formData.AcceptedCmp2} onChange={handleChange}>
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-          </select>
-        </div>
-
         <button type="submit" disabled={loading}>
-          {loading ? 'Predicting...' : 'Predict'}
+          {loading ? 'Đang dự đoán...' : 'Dự đoán khách hàng tiềm năng'}
         </button>
       </form>
 
@@ -166,13 +246,34 @@ const PredictionForm = () => {
 
       {prediction && (
         <div className="prediction-result">
-          <h3>Prediction Result:</h3>
+          <h3>Kết quả dự đoán:</h3>
           <p>
-            This customer is predicted to be: 
-            <strong>{prediction.result === 1 ? ' Potential Customer' : ' Not a Potential Customer'}</strong>
+            Khách hàng này được dự đoán là: 
+            <strong>{prediction.result === 1 ? ' Khách hàng tiềm năng mua sách' : ' Không phải khách hàng tiềm năng'}</strong>
           </p>
           {prediction.probability && (
-            <p>Confidence: {(prediction.probability * 100).toFixed(2)}%</p>
+            <p>Độ tin cậy: {(prediction.probability * 100).toFixed(2)}%</p>
+          )}
+          {prediction.result === 1 ? (
+            <div className="recommendations">
+              <h4>Đề xuất marketing:</h4>
+              <ul>
+                <li>Gửi thông báo về sách mới về AI và công nghệ giáo dục</li>
+                <li>Cung cấp ưu đãi đặc biệt cho giáo viên và sinh viên</li>
+                <li>Tạo danh sách sách gợi ý theo chuyên ngành</li>
+                <li>Mời tham gia hội thảo và workshop về công nghệ giáo dục</li>
+              </ul>
+            </div>
+          ) : (
+            <div className="recommendations">
+              <h4>Đề xuất marketing:</h4>
+              <ul>
+                <li>Gửi email giới thiệu các sách bestseller về lập trình</li>
+                <li>Cung cấp mã giảm giá 20% cho lần mua đầu tiên</li>
+                <li>Tạo nội dung về lợi ích của việc học công nghệ thông tin</li>
+                <li>Gửi sample chapters miễn phí để khuyến khích mua sách</li>
+              </ul>
+            </div>
           )}
         </div>
       )}

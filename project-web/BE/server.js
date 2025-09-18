@@ -61,7 +61,7 @@ app.post('/api/predict', (req, res) => {
     mode: 'text',
     pythonPath: 'python',
     pythonOptions: ['-u'],
-    scriptPath: path.join(__dirname, '../../analytics'),
+    scriptPath: path.join(__dirname, '../analytics'),
     args: [JSON.stringify(req.body)]
   };
 
@@ -88,7 +88,7 @@ app.get('/api/analytics', (req, res) => {
     mode: 'text',
     pythonPath: 'python',
     pythonOptions: ['-u'],
-    scriptPath: path.join(__dirname, '../../analytics'),
+    scriptPath: path.join(__dirname, '../analytics'),
   };
 
   PythonShell.run('analyze.py', options, (err, results) => {
@@ -97,6 +97,8 @@ app.get('/api/analytics', (req, res) => {
       res.status(500).json({ error: 'Error running analytics', details: err.message });
       return;
     }
+
+    console.log('PythonShell results:', results);
 
     try {
       const analytics = JSON.parse(results[0]);

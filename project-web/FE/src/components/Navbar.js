@@ -6,14 +6,14 @@ import {
   Container,
   Box,
 } from '@mui/material';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 const Navbar = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <PeopleAltIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <MenuBookIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -26,7 +26,7 @@ const Navbar = () => {
               textDecoration: 'none',
             }}
           >
-            Hệ thống Dự đoán Khách hàng Tiềm năng
+            Hệ thống Dự đoán Khách hàng Mua Sách Công nghệ Giáo dục
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
@@ -40,7 +40,7 @@ const Navbar = () => {
                 marginLeft: 2,
               }}
             >
-              Kyanon Digital
+              NXB Đại Học Sư Phạm
             </Typography>
           </Box>
         </Toolbar>
