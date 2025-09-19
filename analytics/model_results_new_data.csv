@@ -1,0 +1,5 @@
+Model,Accuracy,Precision,Recall,F1-score,CV Mean,CV Std
+Logistic Regression,1.0,1.0,1.0,1.0,0.975,0.049999999999999996
+Random Forest,1.0,1.0,1.0,1.0,1.0,0.0
+Gradient Boosting,1.0,1.0,1.0,1.0,1.0,0.0
+SVM,1.0,1.0,1.0,1.0,0.975,0.049999999999999996

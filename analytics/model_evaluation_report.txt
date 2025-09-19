@@ -1,0 +1,20 @@
+BÁO CÁO ĐÁNH GIÁ MÔ HÌNH DỰ ĐOÁN KHÁCH HÀNG TIỀM NĂNG
+============================================================
+
+Ngày tạo: 2025-09-18 17:37:50
+
+BẢNG ĐÁNH GIÁ CHI TIẾT:
+----------------------------------------
+            Mô hình Accuracy Precision Recall F1-score CV Mean CV Std
+Logistic Regression   1.0000    1.0000 1.0000   1.0000  1.0000 0.0000
+      Random Forest   1.0000    1.0000 1.0000   1.0000  1.0000 0.0000
+  Gradient Boosting   1.0000    1.0000 1.0000   1.0000  1.0000 0.0000
+                SVM   0.9483    1.0000 0.9048   0.9500  0.9652 0.0211
+
+MÔ HÌNH TỐT NHẤT: Logistic Regression
+----------------------------------------
+Accuracy: 1.0000
+Precision: 1.0000
+Recall: 1.0000
+F1-score: 1.0000
+CV Mean: 1.0000 (+/- 0.0000)

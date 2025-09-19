@@ -43,7 +43,7 @@ yarn-error.log*
 
 # Project specific
 *.pkl
-*.csv
+# *.csv
 *.png
 *.json
 !package.json
