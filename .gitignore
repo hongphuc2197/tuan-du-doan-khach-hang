@@ -44,7 +44,7 @@ yarn-error.log*
 # Project specific
 *.pkl
 # *.csv
-*.png
+# *.png
 *.json
 !package.json
 !package-lock.json
