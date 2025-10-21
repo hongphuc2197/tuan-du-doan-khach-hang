@@ -1,0 +1,76 @@
+thesis_defense/
+│
+├── 📚 documentation/           [9 files] Tài liệu chính cho bảo vệ
+│   ├── BAT_DAU_O_DAY.md                    ⭐ BẮT ĐẦU TỪ ĐÂY
+│   ├── CHECKLIST_1_TUAN.md                 Timeline 7 ngày
+│   ├── KE_HOACH_1_TUAN.md                  Kế hoạch chi tiết
+│   ├── SO_SANH_BASELINE_VS_ADVANCED.md     Đóng góp đề tài
+│   ├── MASTER_THESIS_DOCUMENTATION.md      Documentation đầy đủ
+│   ├── LITERATURE_REVIEW.md                Tổng quan lý thuyết
+│   ├── MASTER_THESIS_ROADMAP.md            Roadmap phát triển
+│   └── README.md                           Hướng dẫn dự án
+│
+├── 🎤 slides/                  [1 file] Slides trình bày
+│   └── SLIDES_TRINH_BAY_THAC_SI.md         40 slides hoàn chỉnh
+│
+├── 📊 reports/                 [4 files] Báo cáo kết quả
+│   ├── BOOK_TYPE_ANALYSIS_REPORT.md
+│   ├── SUMMARY.md
+│   ├── RUN_RESULTS.md
+│   └── QUICK_START.md
+│
+├── 💻 source_code/             Source code chính
+│   ├── analytics/                          Python ML scripts
+│   │   ├── analyze_student_data.py         ⭐ Baseline models
+│   │   ├── predict_potential_customers.py  ⭐ Prediction
+│   │   ├── advanced_ml_pipeline.py         Advanced ML
+│   │   ├── statistical_analysis.py         Statistical validation
+│   │   ├── analyze_customers_by_book_type.py
+│   │   └── update_pipeline_with_book_types.py
+│   │
+│   └── web_application/                    Full-stack app
+│       ├── backend/                        Node.js + Express
+│       │   ├── server.js
+│       │   ├── package.json
+│       │   └── requirements.txt
+│       │
+│       └── frontend/                       React.js
+│           ├── src/
+│           │   ├── App.js
+│           │   ├── components/
+│           │   └── services/
+│           └── package.json
+│
+├── 📊 data/                    [3 files] Dữ liệu
+│   ├── user_actions_students_576.csv       ⭐ Dataset chính
+│   ├── book_type_analysis_report.json
+│   └── potential_customers_by_book_type.json
+│
+├── 📈 results/                 Kết quả & Models
+│   ├── charts/                             ⭐ 6 biểu đồ cho slides
+│   │   ├── confusion_matrix.png
+│   │   ├── correlation_matrix.png
+│   │   ├── eda_plots.png
+│   │   ├── feature_importance.png
+│   │   ├── model_comparison.png
+│   │   └── book_type_analysis.png
+│   │
+│   ├── models/                             Models sau khi train
+│   └── predictions/                        Prediction results
+│
+└── 🚀 scripts/                 [4 files] Scripts để chạy
+    ├── quick_run_for_defense.sh            ⭐ CHẠY NÀY TRƯỚC (1-2h)
+    ├── run_full_pipeline.sh                Pipeline đầy đủ
+    ├── run_master_thesis_pipeline.sh       Pipeline advanced
+    └── requirements.txt                    Python dependencies
+
+═══════════════════════════════════════════════════════════════
+
+⭐ PRIORITY FILES (Đọc/Chạy đầu tiên):
+
+1. documentation/BAT_DAU_O_DAY.md           - Hướng dẫn từng bước
+2. scripts/quick_run_for_defense.sh         - Chạy để có kết quả
+3. slides/SLIDES_TRINH_BAY_THAC_SI.md       - 40 slides trình bày
+4. documentation/SO_SANH_BASELINE_VS_ADVANCED.md - Đóng góp
+
+═══════════════════════════════════════════════════════════════

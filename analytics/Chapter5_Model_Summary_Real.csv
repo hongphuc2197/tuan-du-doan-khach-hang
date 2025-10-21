@@ -1,0 +1,5 @@
+Mô hình,Accuracy,Precision,Recall,F1-score,AUC,CV Score
+Logistic Regression,66.4%,67.0%,88.7%,76.4%,0.750,66.5%
+Random Forest,67.2%,72.6%,74.6%,73.6%,0.780,62.0%
+SVM,69.8%,69.1%,91.5%,78.8%,0.820,66.3%
+Gradient Boosting,66.4%,67.8%,85.9%,75.8%,0.760,61.5%

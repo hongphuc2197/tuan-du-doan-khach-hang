@@ -1,0 +1,237 @@
+.book-type-analysis {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.book-type-analysis h2 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+.loading {
+  color: #3498db;
+}
+
+/* Summary Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.card .number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card .percentage {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-top: 5px;
+}
+
+/* Book Types Section */
+.book-types-section {
+  margin-bottom: 40px;
+}
+
+.book-types-section h3 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+.book-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.book-type-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.book-type-card:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  transform: translateY(-3px);
+}
+
+.book-type-card h4 {
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.stats {
+  margin-bottom: 15px;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 5px 0;
+}
+
+.stat .label {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.stat .value {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.stat .percentage {
+  color: #3498db;
+  font-size: 0.85rem;
+  margin-left: 5px;
+}
+
+.progress-bar {
+  background: #ecf0f1;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress {
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Visualization Section */
+.visualization-section {
+  margin-bottom: 40px;
+}
+
+.visualization-section h3 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+.chart-container {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.analysis-chart {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Insights Section */
+.insights-section h3 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.insight-card {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-5px);
+}
+
+.insight-card h4 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.insight-card p {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .book-type-analysis {
+    padding: 15px;
+  }
+  
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .book-types-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .card .number {
+    font-size: 2rem;
+  }
+  
+  .book-type-analysis h2 {
+    font-size: 1.5rem;
+  }
+}
